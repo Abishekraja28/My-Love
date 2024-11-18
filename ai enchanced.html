@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Section Styles */
+        .section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            font-size: 2rem;
+            position: relative;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+        }
+
+        .section-1 {
+            background-image: url('wallpaper1.jpg'); /* First wallpaper */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .section-2 {
+            background-image: url('wallpaper5.jpg'); /* Second wallpaper */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Transform styles */
+        .scale-down {
+            transform: scale(0.8);
+            opacity: 0.6;
+        }
+
+        .active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Button Styling */
+        .big-button {
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            background-color: rgba(255, 182, 193, 0.9);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .big-button:hover {
+            transform: scale(1.2);
+            box-shadow: 0 12px 25px rgba(255, 105, 180, 0.8);
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal-content h1 {
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            font-size: 1rem;
+            padding: 10px 20px;
+            background-color: rgba(255, 105, 180, 0.9);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        .modal-buttons button:hover {
+            background-color: rgba(255, 182, 193, 1);
+        }
+
+        /* Heart Generation */
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Section 1 -->
+    <div class="section section-1 active" id="section-1">
+        <button class="big-button" onclick="openModal()">I love you, Peaches</button>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="section section-2 scale-down" id="section-2">
+        <p>You are my sunshine!</p>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <h1>Do you love me?</h1>
+            <div class="modal-buttons">
+                <button onclick="handleAnswer(true)">Yes</button>
+                <button onclick="handleAnswer(false)">No</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sections = document.querySelectorAll('.section');
+
+        window.addEventListener('scroll', () => {
+            const viewportHeight = window.innerHeight;
+
+            sections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+
+                // Check if section is in the center of the viewport
+                const isInCenter =
+                    rect.top >= -0.5 * viewportHeight &&
+                    rect.bottom <= viewportHeight * 1.5;
+
+                // Apply scaling effect based on visibility
+                if (isInCenter) {
+                    section.classList.add('active');
+                    section.classList.remove('scale-down');
+                } else {
+                    section.classList.add('scale-down');
+                    section.classList.remove('active');
+                }
+            });
+        });
+
+        // Open modal when button is clicked
+        function openModal() {
+            document.getElementById('confirmationModal').style.display = 'flex';
+        }
+
+        // Handle the answer from the modal
+        function handleAnswer(answer) {
+            if (answer) {
+                alert("You mean the world to me!");
+            } else {
+                alert("Aww, no worries! I still love you.");
+            }
+
+            // Close the modal after the response
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
